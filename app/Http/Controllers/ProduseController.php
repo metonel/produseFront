@@ -16,7 +16,7 @@ class ProduseController extends Controller
      */
     public function index()
     {
-        $produse = Produse::paginate(15);
+        $produse = Produse::orderBy('id', 'desc')->paginate(5);
 
         //daca se returneaza o lista de resurse, trebuie folosit collection
 
