@@ -14,6 +14,20 @@ class Produse extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        // return parent::toArray($request);  //da inapoi toate detaliile
+        return [
+            'id' => $this->id,
+            'titlu' => $this->title,
+            'descriere' => $this->descriere
+        ];
     }
+
+    public function with($request) {
+        return [
+            'version' => '1.0.0',
+            'author_url' => url('http://codeplayground.ro'),
+            'king' => 'Toni'
+        ];
+    }
+
 }

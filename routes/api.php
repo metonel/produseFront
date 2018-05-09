@@ -36,4 +36,4 @@ Route::put('produse', 'ProduseController@store');
 
 //stergere
 
-Route::delete('produse', 'ProduseController@destroy');
+Route::delete('produse/{id}', 'ProduseController@destroy');

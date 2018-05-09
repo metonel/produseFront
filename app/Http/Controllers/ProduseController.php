@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests;
 use App\Produse;
 use App\Http\Resources\Produse as ProduseResource; //pt ca tot Produse ii si numele model-ului
 
@@ -40,7 +41,13 @@ class ProduseController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $produs = $request->isMethod('PUT') ? Produse::findOrFail($request->produs_id) : new Produse;
+        $produs->id = $request->input('produs_id');        
+        $produs->titlu = $request->input('titlu');
+        $produs->descriere = $request->input('descriere');
+        if($produs->save()) {
+            return new ProduseResource($produs);
+        }
     }
 
     /**
@@ -51,7 +58,9 @@ class ProduseController extends Controller
      */
     public function show($id)
     {
-        //
+        $produs = Produse::findOrFail($id);
+        return new ProduseResource($produs);
+        //returneaza un produs care by default are wrapping in data{...}, daca il vrem fara wrapping, in AppServiceProvider adaugam Resource::withoutWrapping();
     }
 
     /**
@@ -85,6 +94,10 @@ class ProduseController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $produs = Produse::findOrFail($id);
+
+        if($produs->delete()){
+            return new ProduseResource($produs);
+        }
     }
 }
